@@ -29,12 +29,55 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Stub server-only code for static export
+        run: |
+          # Create safe stubs for server actions so Next can statically export
+          mkdir -p src/app || true
+          cat > src/app/actions.ts <<'TS'
+          // Stubbed server actions — replaced during CI so the site can be statically exported.
+          export async function runGenerateTimetable(_input:any){
+            return { success: true, data: { timetable: [], conflicts: [], report: 'stubbed in CI' } };
+          }
+          export async function runSuggestFaculty(_input:any){
+            return { success: true, data: [] };
+          }
+          export async function runChatAssistant(_input:any){
+            return { success: true, data: { messages: [] } };
+          }
+          TS
+
+          mkdir -p src/lib/timetable || true
+          cat > src/lib/timetable/generate-timetable.ts <<'TS'
+          // Stubbed timetable generator for static export
+          export type GenerateTimetableInput = any;
+          export type GenerateTimetableOutput = { timetable: any[]; conflicts: any[]; report: string };
+          export async function generateTimetable(_input: GenerateTimetableInput): Promise<GenerateTimetableOutput> {
+            return { timetable: [], conflicts: [], report: 'stubbed in CI' };
+          }
+          TS
+
+          cat > src/lib/timetable/suggest-faculty.ts <<'TS'
+          // Stubbed suggest-faculty for static export
+          export type SuggestFacultyInput = any;
+          export async function suggestFaculty(_input: SuggestFacultyInput){
+            return [];
+          }
+          TS
+
+          mkdir -p src/ai/flows || true
+          cat > src/ai/flows/chat-assistant.ts <<'TS'
+          // Stubbed chat assistant flow for static export
+          export type ChatAssistantInput = any;
+          export async function runChat(_input: ChatAssistantInput){
+            return { messages: [] };
+          }
+          TS
+
       - name: Build (static export)
         env:
           NEXT_PUBLIC_BASE_PATH: /SIH-REPO
         run: |
           npm run build
-          npm run export
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
