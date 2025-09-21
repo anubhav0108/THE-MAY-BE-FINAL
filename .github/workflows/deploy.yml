@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy Next.js site to Pages
 
 on:
   push:
@@ -26,6 +26,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Build
+        env:
+          NEXT_PUBLIC_BASE_PATH: /SIH-REPO
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: npm run build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
