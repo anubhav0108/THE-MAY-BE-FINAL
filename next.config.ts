@@ -1,9 +1,12 @@
 
 import type {NextConfig} from 'next';
 
+const isProd = process.env.NODE_ENV === 'production';
+
 const nextConfig: NextConfig = {
-  basePath: '/SIH-REPO',
-  assetPrefix: '/SIH-REPO/',
+  output: 'export',
+  basePath: isProd ? '/SIH-REPO' : '',
+  assetPrefix: isProd ? '/SIH-REPO/' : '',
   typescript: {
     ignoreBuildErrors: true,
   },
