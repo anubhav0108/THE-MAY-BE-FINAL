@@ -5,6 +5,12 @@ import Image from "next/image";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
+export async function generateStaticParams() {
+  return mockEditorials.map((editorial) => ({
+    id: editorial.id,
+  }));
+}
+
 const editorialContent: { [key: string]: string[] } = {
   E001: [
     "The integration of Artificial Intelligence into our educational frameworks represents a paradigm shift not seen since the advent of the internet. For academic administration, AI-powered tools like Timetable Ace can solve complex logistical puzzles in minutes, a task that previously took committees weeks. This efficiency allows institutions to focus on student outcomes rather than administrative overhead.",
@@ -29,8 +35,9 @@ const editorialContent: { [key: string]: string[] } = {
 };
 
 
-export default function EditorialPage({ params }: { params: { id: string } }) {
-  const editorial = mockEditorials.find((e) => e.id === params.id);
+export default async function EditorialPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const editorial = mockEditorials.find((e) => e.id === id);
   
   if (!editorial) {
     notFound();

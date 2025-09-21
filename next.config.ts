@@ -2,12 +2,11 @@
 import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  output: 'export',
+  basePath: '/SIH-REPO',
+  assetPrefix: '/SIH-REPO/',
   typescript: {
     ignoreBuildErrors: true,
   },
-  basePath: '/SIH-REPO',
   eslint: {
     ignoreDuringBuilds: true,
   },

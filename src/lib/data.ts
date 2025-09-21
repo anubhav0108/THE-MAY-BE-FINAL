@@ -159,12 +159,12 @@ export const mockResults: StudentResult[] = [
   { id: 'RES42', studentName: 'Arnav Singh', studentId: 'S042', branch: 'Electronics', semester: 7, sgpa: 8.8, cgpa: 8.9 },
   { id: 'RES43', studentName: 'Isha Patel', studentId: 'S043', branch: 'Mechanical', semester: 1, sgpa: 8.6, cgpa: 8.6 },
   { id: 'RES44', studentName: 'Yash Verma', studentId: 'S044', branch: 'Computer Science', semester: 5, sgpa: 9.2, cgpa: 9.1 },
-  { id: 'RES45', name: 'Anaya Jha', studentId: 'S045', branch: 'Electrical', semester: 3, sgpa: 8.4, cgpa: 8.5 },
-  { id: 'RES46', name: 'Nikhil Gupta', studentId: 'S046', branch: 'Civil', semester: 5, sgpa: 7.9, cgpa: 8.0 },
-  { id: 'RES47', name: 'Parth Kumar', studentId: 'S047', branch: 'Mechanical', semester: 7, sgpa: 8.5, cgpa: 8.4 },
-  { id: 'RES48', name: 'Saanvi Reddy', studentId: 'S048', branch: 'Electronics', semester: 1, sgpa: 9.1, cgpa: 9.1 },
-  { id: 'RES49', name: 'Dev Iyer', studentId: 'S049', branch: 'Computer Science', semester: 3, sgpa: 9.3, cgpa: 9.2 },
-  { id: 'RES50', name: 'Aadhya Rathod', studentId: 'S050', branch: 'Biotechnology', semester: 5, sgpa: 8.6, cgpa: 8.7 },
+  { id: 'RES45', studentName: 'Anaya Jha', studentId: 'S045', branch: 'Electrical', semester: 3, sgpa: 8.4, cgpa: 8.5 },
+  { id: 'RES46', studentName: 'Nikhil Gupta', studentId: 'S046', branch: 'Civil', semester: 5, sgpa: 7.9, cgpa: 8.0 },
+  { id: 'RES47', studentName: 'Parth Kumar', studentId: 'S047', branch: 'Mechanical', semester: 7, sgpa: 8.5, cgpa: 8.4 },
+  { id: 'RES48', studentName: 'Saanvi Reddy', studentId: 'S048', branch: 'Electronics', semester: 1, sgpa: 9.1, cgpa: 9.1 },
+  { id: 'RES49', studentName: 'Dev Iyer', studentId: 'S049', branch: 'Computer Science', semester: 3, sgpa: 9.3, cgpa: 9.2 },
+  { id: 'RES50', studentName: 'Aadhya Rathod', studentId: 'S050', branch: 'Biotechnology', semester: 5, sgpa: 8.6, cgpa: 8.7 },
 ];
 
 export const mockQuizMarks: QuizMark[] = [

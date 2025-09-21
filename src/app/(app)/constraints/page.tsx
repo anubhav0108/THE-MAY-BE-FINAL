@@ -27,7 +27,7 @@ import {
 } from "@/components/ui/select";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Switch } from "@/components/ui/switch";
-import { Save, Beaker, TrendingUp, UserMinus, Building2, Calendar as CalendarIcon } from "lucide-react";
+import { Save, Beaker, TrendingUp, UserMinus, Building2, Calendar as CalendarIcon, AlertCircle, Loader2 } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
 import { Check, ChevronsUpDown } from "lucide-react";
@@ -55,6 +55,9 @@ const initialAvailability: Record<string, DayAvailability> = {
 export default function ConstraintsPage() {
   const { toast } = useToast();
   const { faculty, rooms, courses, constraints, setConstraints, scenario, setScenario } = useContext(DataContext);
+  
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const [isApplying, setIsApplying] = useState(false);
   
   const [facultyConstraints, setFacultyConstraints] = useState({
     selectedFaculty: '',
@@ -103,11 +106,27 @@ export default function ConstraintsPage() {
     };
     
     setConstraints(allConstraints);
+    setHasUnsavedChanges(false);
     
     toast({
       title: "Constraints Saved!",
       description: "Your preferences and simulation settings have been successfully saved.",
     });
+  };
+
+  const handleApplyConstraints = async () => {
+    setIsApplying(true);
+    
+    // Save constraints first
+    handleSave();
+    
+    // Show success message
+    toast({
+      title: "Constraints Applied!",
+      description: "Your constraints have been applied and will be used in the next timetable generation.",
+    });
+    
+    setIsApplying(false);
   };
 
   const handleFacultyAvailabilityChange = (day: string, field: keyof DayAvailability, value: any) => {
@@ -121,6 +140,7 @@ export default function ConstraintsPage() {
         }
       }
     }));
+    setHasUnsavedChanges(true);
   };
   
   const handleRoomAvailabilityChange = (day: string, field: keyof DayAvailability, value: any) => {
@@ -134,6 +154,7 @@ export default function ConstraintsPage() {
         }
       }
     }));
+    setHasUnsavedChanges(true);
   };
 
   const MultiSelect = ({ title, options, selected, onSelectedChange }: { title: string, options: {value: string, label: string}[], selected: string[], onSelectedChange: (value: string[]) => void }) => {
@@ -195,11 +216,36 @@ export default function ConstraintsPage() {
         <div>
             <h1 className="text-3xl font-headline font-bold">Define Constraints</h1>
             <p className="text-muted-foreground">Set the rules and preferences for the timetable generator.</p>
+            {hasUnsavedChanges && (
+              <div className="mt-2 flex items-center text-amber-600">
+                <AlertCircle className="mr-2 h-4 w-4" />
+                <span className="text-sm">You have unsaved changes</span>
+              </div>
+            )}
         </div>
-        <Button size="lg" onClick={handleSave}>
-          <Save className="mr-2 h-5 w-5" />
-          Save All Constraints
-        </Button>
+        <div className="flex gap-3">
+          <Button 
+            size="lg" 
+            variant="outline" 
+            onClick={handleSave}
+            disabled={!hasUnsavedChanges}
+          >
+            <Save className="mr-2 h-5 w-5" />
+            Save Constraints
+          </Button>
+          <Button 
+            size="lg" 
+            onClick={handleApplyConstraints}
+            disabled={isApplying}
+          >
+            {isApplying ? (
+              <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+            ) : (
+              <Beaker className="mr-2 h-5 w-5" />
+            )}
+            Apply Constraints
+          </Button>
+        </div>
       </div>
       
       <Accordion type="multiple" defaultValue={['faculty', 'room', 'course', 'program', 'simulation']} className="space-y-6">
@@ -218,7 +264,10 @@ export default function ConstraintsPage() {
                     <Label htmlFor="faculty-select">Select Faculty</Label>
                     <Select
                       value={facultyConstraints.selectedFaculty}
-                      onValueChange={(value) => setFacultyConstraints(prev => ({...prev, selectedFaculty: value}))}
+                      onValueChange={(value) => {
+                        setFacultyConstraints(prev => ({...prev, selectedFaculty: value}));
+                        setHasUnsavedChanges(true);
+                      }}
                     >
                       <SelectTrigger id="faculty-select">
                         <SelectValue placeholder="Select a faculty member" />
@@ -234,7 +283,10 @@ export default function ConstraintsPage() {
                       id="max-hours" 
                       type="number" 
                       value={facultyConstraints.maxConsecutiveHours}
-                      onChange={(e) => setFacultyConstraints(prev => ({...prev, maxConsecutiveHours: parseInt(e.target.value, 10)}))}
+                      onChange={(e) => {
+                        setFacultyConstraints(prev => ({...prev, maxConsecutiveHours: parseInt(e.target.value, 10)}));
+                        setHasUnsavedChanges(true);
+                      }}
                     />
                   </div>
                   <div className="space-y-2">
@@ -243,7 +295,10 @@ export default function ConstraintsPage() {
                       id="expertise" 
                       placeholder="e.g., CS301, PH100"
                       value={facultyConstraints.expertise}
-                      onChange={(e) => setFacultyConstraints(prev => ({...prev, expertise: e.target.value}))}
+                      onChange={(e) => {
+                        setFacultyConstraints(prev => ({...prev, expertise: e.target.value}));
+                        setHasUnsavedChanges(true);
+                      }}
                     />
                   </div>
                 </div>

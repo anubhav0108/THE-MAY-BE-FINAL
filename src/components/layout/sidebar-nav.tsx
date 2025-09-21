@@ -75,18 +75,13 @@ export function AppSidebarNav() {
 
       return (
         <div className="space-y-1">
-            {state === 'expanded' && <SidebarGroupLabel className="text-slate-400 text-xs font-semibold uppercase tracking-wider">{title}</SidebarGroupLabel>}
+            {state === 'expanded' && <SidebarGroupLabel>{title}</SidebarGroupLabel>}
             <SidebarMenu>
             {visibleItems.map((item) => (
                 <SidebarMenuItem key={item.href}>
-                <SidebarMenuButton 
-                  asChild 
-                  isActive={isNavItemActive(item.href)} 
-                  tooltip={item.label}
-                  className="text-slate-300 hover:text-white hover:bg-slate-800/50 data-[active=true]:bg-purple-500/20 data-[active=true]:text-purple-300 data-[active=true]:border-r-2 data-[active=true]:border-purple-500"
-                >
-                    <Link href={item.href} className="flex items-center gap-3">
-                    <item.icon className="h-4 w-4" />
+                <SidebarMenuButton asChild isActive={isNavItemActive(item.href)} tooltip={item.label}>
+                    <Link href={item.href}>
+                    <item.icon />
                     <span>{item.label}</span>
                     </Link>
                 </SidebarMenuButton>
@@ -98,7 +93,7 @@ export function AppSidebarNav() {
   }
 
   return (
-    <div className="flex flex-col h-full space-y-4 text-slate-300">
+    <div className="flex flex-col h-full space-y-4">
       <div className="space-y-4 flex-1">
         <NavGroup title="Main" items={allNavItems.main} />
         <NavGroup title="Analytics" items={allNavItems.analytics} />
@@ -107,7 +102,7 @@ export function AppSidebarNav() {
       </div>
 
       <div className="mt-auto space-y-4">
-        <SidebarSeparator className="bg-slate-700/50" />
+        <SidebarSeparator />
         <NavGroup title="Help" items={allNavItems.help} />
       </div>
     </div>

@@ -478,14 +478,14 @@ export default function DataPage() {
                       <TableCell>{student.year}</TableCell>
                       <TableCell>
                         <div className="flex flex-wrap gap-1">
-                          {student.electiveChoices.map(choice => (
+                          {student.electiveChoices.map((choice: string) => (
                             <Badge key={choice} variant="secondary">{choice}</Badge>
                           ))}
                         </div>
                       </TableCell>
                        <TableCell>
                         <div className="flex flex-wrap gap-1">
-                          {student.preferredTimeSlots?.map(choice => (
+                          {student.preferredTimeSlots?.map((choice: string) => (
                             <Badge key={choice} variant="outline">{choice}</Badge>
                           ))}
                         </div>

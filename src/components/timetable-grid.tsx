@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useRef, useState, useEffect, useContext } from "react";
+import React, { useRef, useState, useEffect, useContext, useMemo, useCallback } from "react";
 import Link from "next/link";
 import { DataContext } from "@/context/data-context";
 import { TimetableEntry, Conflict } from "@/lib/types";
@@ -77,7 +77,7 @@ type SuggestionState = {
     }
 }
 
-export function TimetableGrid({ timetable, conflicts, report }: TimetableGridProps) {
+export const TimetableGrid = React.memo(function TimetableGrid({ timetable, conflicts, report }: TimetableGridProps) {
   const { toast } = useToast();
   const timetableRef = useRef<HTMLDivElement>(null);
   const [isExporting, setIsExporting] = useState(false);
@@ -107,9 +107,24 @@ export function TimetableGrid({ timetable, conflicts, report }: TimetableGridPro
     }
   }, [timetable]);
   
-  const getEntry = (day: string, time: string) => {
+  const getEntry = useCallback((day: string, time: string) => {
     return editableTimetable.find((entry) => entry.day === day && entry.time === time);
-  };
+  }, [editableTimetable]);
+
+  // Memoize the time slots and days to prevent unnecessary re-renders
+  const timeSlots = useMemo(() => [
+    "09:00 - 10:00",
+    "10:00 - 11:00", 
+    "11:00 - 12:00",
+    "12:00 - 01:00 (Lunch Break)",
+    "02:00 - 03:00",
+    "03:00 - 04:00",
+    "04:00 - 05:00"
+  ], []);
+
+  const days = useMemo(() => [
+    "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"
+  ], []);
   
   const handleManualOverride = () => {
     setIsEditing(true);
@@ -284,15 +299,15 @@ export function TimetableGrid({ timetable, conflicts, report }: TimetableGridPro
         dsConceptSlide.addText("Arrays vs. Linked Lists", { x: 0.5, y: 0.5, fontSize: 32, bold: true, color: "0072C6" });
         dsConceptSlide.addText([
             { text: "Arrays:", options: { bold: true } },
-            { text: "Store elements in contiguous memory locations.", options: { bullet: { indentLevel: 30 }, fontSize: 18 } },
-            { text: "Excellent for fast, O(1) random access using an index.", options: { bullet: { indentLevel: 30 }, fontSize: 18 } },
-            { text: "Inefficient for insertions/deletions in the middle (O(n)).", options: { bullet: { indentLevel: 30 }, fontSize: 18 } },
+            { text: "Store elements in contiguous memory locations.", options: { bullet: { indent: 30 }, fontSize: 18 } },
+            { text: "Excellent for fast, O(1) random access using an index.", options: { bullet: { indent: 30 }, fontSize: 18 } },
+            { text: "Inefficient for insertions/deletions in the middle (O(n)).", options: { bullet: { indent: 30 }, fontSize: 18 } },
         ], { x: 0.5, y: 1.5, w: '90%', h: '20%', fontSize: 20, color: '363636' });
          dsConceptSlide.addText([
             { text: "Linked Lists:", options: { bold: true } },
-            { text: "Store elements as nodes with pointers to the next node.", options: { bullet: { indentLevel: 30 }, fontSize: 18 } },
-            { text: "Slow for access (O(n)), as you must traverse the list.", options: { bullet: { indentLevel: 30 }, fontSize: 18 } },
-            { text: "Very efficient for insertions/deletions at ends (O(1)).", options: { bullet: { indentLevel: 30 }, fontSize: 18 } },
+            { text: "Store elements as nodes with pointers to the next node.", options: { bullet: { indent: 30 }, fontSize: 18 } },
+            { text: "Slow for access (O(n)), as you must traverse the list.", options: { bullet: { indent: 30 }, fontSize: 18 } },
+            { text: "Very efficient for insertions/deletions at ends (O(1)).", options: { bullet: { indent: 30 }, fontSize: 18 } },
         ], { x: 0.5, y: 3.5, w: '90%', h: '20%', fontSize: 20, color: '363636' });
 
         let bigOSlide = pres.addSlide({ masterName: "MASTER_SLIDE" });
@@ -323,7 +338,7 @@ export function TimetableGrid({ timetable, conflicts, report }: TimetableGridPro
     }
 
     let thankYouSlide = pres.addSlide({ masterName: "MASTER_SLIDE" });
-    thankYouSlide.addText("Thank You & Questions?", { x: 'c', y: 'm', align: 'center', valign: 'middle', fontSize: 48, bold: true, color: "0072C6" });
+    thankYouSlide.addText("Thank You & Questions?", { x: 0.5, y: 2.5, w: '90%', h: '30%', align: 'center', valign: 'middle', fontSize: 48, bold: true, color: "0072C6" });
 
     pres.writeFile({ fileName: `${safeTitle}_slides.pptx` });
   };
@@ -426,7 +441,7 @@ export function TimetableGrid({ timetable, conflicts, report }: TimetableGridPro
     }
 
     // --- Footer with Page Numbers ---
-    const pageCount = doc.internal.getNumberOfPages();
+    const pageCount = doc.getNumberOfPages();
     for (let i = 1; i <= pageCount; i++) {
         doc.setPage(i);
         doc.setFontSize(10);
@@ -732,7 +747,7 @@ export function TimetableGrid({ timetable, conflicts, report }: TimetableGridPro
                                     <div className="mt-2 space-y-2">
                                         <Button
                                             variant="outline" size="sm" className="w-full h-8 bg-slate-700/50 border-slate-600/50 hover:bg-slate-600/50"
-                                            onClick={(e) => { e.stopPropagation(); handleSuggestion(day, time, entry.course); }}
+                                            onClick={(e: React.MouseEvent) => { e.stopPropagation(); handleSuggestion(day, time, entry.course); }}
                                             disabled={suggestionState?.loading}
                                         >
                                             {suggestionState?.loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin"/> : <Wand2 className="mr-2 h-4 w-4" />}
@@ -745,7 +760,7 @@ export function TimetableGrid({ timetable, conflicts, report }: TimetableGridPro
                                                 <AlertDescription className="text-xs">
                                                     <p className="font-semibold text-slate-200">{suggestionState.suggestion}</p>
                                                     <p className="text-slate-400 italic mb-2">"{suggestionState.justification}"</p>
-                                                    <Button size="sm" className="w-full h-7 bg-blue-600/20 hover:bg-blue-600/30 border-blue-500/30" onClick={(e) => {e.stopPropagation(); applySuggestion(day, time);}}>
+                                                    <Button size="sm" className="w-full h-7 bg-blue-600/20 hover:bg-blue-600/30 border-blue-500/30" onClick={(e: React.MouseEvent) => {e.stopPropagation(); applySuggestion(day, time);}}>
                                                         Apply Suggestion
                                                     </Button>
                                                 </AlertDescription>
@@ -864,4 +879,4 @@ export function TimetableGrid({ timetable, conflicts, report }: TimetableGridPro
     </div>
     </Dialog>
   );
-}
+});

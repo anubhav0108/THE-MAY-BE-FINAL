@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { TimetableGrid } from "@/components/timetable-grid";
-import { Loader2, Wand2, Users, GraduationCap, BookOpen, DoorOpen, ExternalLink, Beaker, AlertCircle, Clock, Check, ChevronsUpDown, Sparkles } from "lucide-react";
+import { Loader2, Wand2, Users, GraduationCap, BookOpen, DoorOpen, ExternalLink, Beaker, AlertCircle, Clock, Check, ChevronsUpDown, Sparkles, Settings } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Student } from "@/lib/types";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -182,6 +182,16 @@ export default function DashboardPage() {
       days: daysToGenerate,
       existingTimetable: timetableResult?.timetable ? JSON.stringify(timetableResult.timetable) : undefined
     };
+
+    console.log("Generation input:", {
+      coursesCount: courses.length,
+      facultyCount: simulatedFaculty.length,
+      studentsCount: simulatedStudents.length,
+      roomsCount: simulatedRooms.length,
+      constraints: constraints,
+      selectedPrograms: selectedPrograms,
+      selectedDays: daysToGenerate
+    });
 
     try {
       const response = await runGenerateTimetable(input);

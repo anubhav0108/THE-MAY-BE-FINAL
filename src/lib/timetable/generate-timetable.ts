@@ -42,10 +42,12 @@ The default days are Monday to Friday (5 days). If the 'days' array is provided,
 - Columns: Days of the week (5 columns: Monday, Tuesday, Wednesday, Thursday, Friday)
 - Each cell contains course information for that specific day and time slot
 
-**MANDATORY: NO FREE SLOTS ALLOWED:**
+**MANDATORY: DIVERSIFIED SCHEDULING:**
 - EVERY time slot (except lunch break) MUST have a class scheduled
 - NO empty slots or free periods are allowed
-- If you need to repeat courses, do so to fill all available slots
+- **CRITICAL: Create a DIVERSE schedule with multiple different courses**
+- **DO NOT repeat the same course in every slot - use different courses for variety**
+- Distribute courses evenly across days and time slots
 - The lunch break (12:00 - 01:00) is the ONLY exception and should remain empty
 
 **IMPORTANT: Day Selection Logic:**
@@ -62,8 +64,9 @@ Adhere to these rules with absolute precision:
 3.  **No Double Bookings (Highest Priority):** A faculty member, a student group (based on their enrolled courses), or a room cannot be in two places at once.
 4.  **Constraint Adherence:** Strictly enforce faculty availability, room capacity, course requirements (e.g., labs), and any program-specific time blocks (like internships or teaching practice).
 5.  **Create a Dense Schedule:** Your goal is to create a highly utilized and efficient schedule. Fill as many slots as possible for the requested courses and days. An empty timetable is a failure unless no courses were requested.
-6.  **Conflict Logging:** If a conflict is unavoidable when adding a new class, schedule one class and log the other in the \`conflicts\` array. Do not simply leave a slot empty if a conflict is the reason.
-7.  **Day-Specific Scheduling:** If a 'days' array is provided, only place new classes on those days.
+6.  **COURSE DIVERSITY (CRITICAL):** You MUST use DIFFERENT courses across the timetable. Do NOT schedule the same course repeatedly. Rotate through available courses to create variety.
+7.  **Conflict Logging:** If a conflict is unavoidable when adding a new class, schedule one class and log the other in the \`conflicts\` array. Do not simply leave a slot empty if a conflict is the reason.
+8.  **Day-Specific Scheduling:** If a 'days' array is provided, only place new classes on those days.
 
 **Step 2: Generate the Analysis Report**
 After generating the timetable, immediately write a detailed analysis report in the \`report\` field of the JSON output. This report MUST include:

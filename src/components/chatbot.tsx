@@ -79,7 +79,7 @@ export function Chatbot() {
         auditLogs: JSON.stringify(auditLogs),
       });
 
-      if (response.success) {
+      if (response.success && response.data) {
         const assistantMessage: Message = {
           id: Date.now() + 1,
           role: "assistant",

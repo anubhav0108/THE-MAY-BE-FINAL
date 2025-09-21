@@ -163,9 +163,11 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     if (authStatus) {
       const storedRole = localStorage.getItem('userRole') as UserRole;
       const storedUser = localStorage.getItem('currentUser');
+      const storedConstraints = localStorage.getItem('constraints');
       
       if (storedRole) setUserRole(storedRole);
       if (storedUser) setCurrentUser(JSON.parse(storedUser));
+      if (storedConstraints) setConstraints(JSON.parse(storedConstraints));
       
       if (storedRole === 'student' || storedRole === 'faculty') {
         const savedTimetable = localStorage.getItem('timetableResult');
@@ -193,6 +195,19 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     setAuditLogs(prevLogs => [log, ...prevLogs]);
   }
 
+  const handleSetConstraints = (value: React.SetStateAction<Constraints>) => {
+    if (typeof value === 'function') {
+      setConstraints(prev => {
+        const newValue = value(prev);
+        localStorage.setItem('constraints', JSON.stringify(newValue));
+        return newValue;
+      });
+    } else {
+      setConstraints(value);
+      localStorage.setItem('constraints', JSON.stringify(value));
+    }
+  }
+
   return (
     <DataContext.Provider value={{ 
         students, setStudents, 
@@ -202,7 +217,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         searchTerm, setSearchTerm,
         timetableResult, 
         setTimetableResult: handleSetTimetableResult,
-        constraints, setConstraints,
+        constraints, setConstraints: handleSetConstraints,
         notificationHistory, setNotificationHistory,
         scenario, setScenario,
         userRole, setUserRole,
