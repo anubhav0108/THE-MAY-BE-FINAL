@@ -1,0 +1,107 @@
+
+{
+  "placeholderImages": [
+    {
+      "id": "book1",
+      "description": "Cover of The Art of Computer Programming",
+      "imageUrl": "https://picsum.photos/seed/book1/300/400"
+    },
+    {
+      "id": "book2",
+      "description": "Cover of Introduction to Algorithms",
+      "imageUrl": "https://picsum.photos/seed/book2/300/400"
+    },
+    {
+      "id": "book3",
+      "description": "Cover of Clean Code",
+      "imageUrl": "https://picsum.photos/seed/book3/300/400"
+    },
+    {
+      "id": "book4",
+      "description": "Cover of Design Patterns",
+      "imageUrl": "https://picsum.photos/seed/book4/300/400"
+    },
+    {
+      "id": "book5",
+      "description": "Cover of The Pragmatic Programmer",
+      "imageUrl": "https://picsum.photos/seed/book5/300/400"
+    },
+    {
+      "id": "book6",
+      "description": "Cover of Structure and Interpretation of Computer Programs",
+      "imageUrl": "https://picsum.photos/seed/book6/300/400"
+    },
+    {
+      "id": "book7",
+      "description": "Cover of Code Complete",
+      "imageUrl": "https://picsum.photos/seed/book7/300/400"
+    },
+    {
+      "id": "book8",
+      "description": "Cover of The Mythical Man-Month",
+      "imageUrl": "https://picsum.photos/seed/book8/300/400"
+    },
+    {
+      "id": "book9",
+      "description": "Cover of Refactoring",
+      "imageUrl": "https://picsum.photos/seed/book9/300/400"
+    },
+    {
+      "id": "book10",
+      "description": "Cover of Cracking the Coding Interview",
+      "imageUrl": "https://picsum.photos/seed/book10/300/400"
+    },
+    {
+      "id": "book11",
+      "description": "Cover of Artificial Intelligence: A Modern Approach",
+      "imageUrl": "https://picsum.photos/seed/book11/300/400"
+    },
+    {
+      "id": "book12",
+      "description": "Cover of Compilers: Principles, Techniques, & Tools",
+      "imageUrl": "https://picsum.photos/seed/book12/300/400"
+    },
+    {
+      "id": "book13",
+      "description": "Cover of The Clean Coder",
+      "imageUrl": "https://picsum.photos/seed/book13/300/400"
+    },
+    {
+      "id": "book14",
+      "description": "Cover of Thinking, Fast and Slow",
+      "imageUrl": "https://picsum.photos/seed/book14/300/400"
+    },
+    {
+      "id": "book15",
+      "description": "Cover of Sapiens: A Brief History of Humankind",
+      "imageUrl": "https://picsum.photos/seed/book15/300/400"
+    },
+    {
+      "id": "editorial1",
+      "description": "Image for AI in Education editorial",
+      "imageUrl": "https://picsum.photos/seed/editorial1/600/400"
+    },
+    {
+      "id": "editorial2",
+      "description": "Image for Green Engineering editorial",
+      "imageUrl": "https://picsum.photos/seed/editorial2/600/400"
+    },
+    {
+      "id": "editorial3",
+      "description": "Image for Campus Life editorial",
+      "imageUrl": "https://picsum.photos/seed/editorial3/600/400"
+    },
+    {
+      "id": "editorial4",
+      "description": "Image for Humanities editorial",
+      "imageUrl": "https://picsum.photos/seed/editorial4/600/400"
+    },
+    {
+      "id": "editorial5",
+      "description": "Image for Mental Health editorial",
+      "imageUrl": "https://picsum.photos/seed/editorial5/600/400"
+    }
+  ]
+}
+
+    
